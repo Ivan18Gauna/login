@@ -12,7 +12,7 @@ export default function Login() {
         password: ''
     })
 
-    const { loginWithGoogle, login } = useAuth()
+    const { loginWithGoogle, login, resetPassword } = useAuth()
     const [error, setError] = useState()
     const navigate = useNavigate()
 
@@ -41,6 +41,20 @@ export default function Login() {
         }
     }
 
+    const handleResetPassword = async (e) => {
+        e.preventDefault()
+        if (!user.email) {
+            return setError('Please enter your email')
+        }
+        try {
+            await resetPassword(user.email)
+            setError('we sent you an email with a link to reset your password')
+        } catch (error) {
+            setError(error.message)
+        }
+
+    }
+
 
     return (
         <div className={styles.container}>
@@ -49,7 +63,7 @@ export default function Login() {
             </div>
             <div className={styles.login}>
                 <form onSubmit={handleSubmit}>
-                    
+
                     <h3 className={styles.inputEmailPassword}>USER LOGIN</h3>
                     <div className={styles.alert}>
                         {error ? <Alert message={error} /> : null}
@@ -69,6 +83,9 @@ export default function Login() {
                         <div>
                             <input className={styles.input} type="password" name="password" id="password" placeholder="********" onChange={handleChange} />
                         </div>
+                    </div>
+                    <div className={styles.forgot}>
+                        <a href="" onClick={handleResetPassword}>Forgot your Password?</a>
                     </div>
                     {user.email === '' || user.password === '' ?
                         <div className={styles.btnDiv}>
