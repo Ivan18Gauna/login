@@ -1,0 +1,11 @@
+.a a {
+    margin-right: 12px;
+}
+
+@media screen and (max-width: 930px) {
+    .a a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
